@@ -27,7 +27,8 @@ public class XmlQuery {
     /**
      * Creates a query
      * 
-     * @param query
+     * @param query the query
+     * @param name the name
      */
     public XmlQuery(String query, String name) {
         this.query = query;
@@ -37,7 +38,7 @@ public class XmlQuery {
     /**
      * Returns the query string
      * 
-     * @return
+     * @return the query string
      */
     public String getQuery() {
         return this.query;
@@ -46,7 +47,7 @@ public class XmlQuery {
     /**
      * Returns the query name
      * 
-     * @return
+     * @return the query name
      */
     public String getName() {
         return this.name;

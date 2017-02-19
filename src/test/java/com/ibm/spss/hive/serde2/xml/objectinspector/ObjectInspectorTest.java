@@ -58,6 +58,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "boolean");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -75,6 +76,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "tinyint");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -92,6 +94,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "double");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -109,6 +112,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "float");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -126,6 +130,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "int");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -143,6 +148,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "bigint");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -160,6 +166,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "smallint");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -177,6 +184,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "string");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "/test/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();
@@ -188,13 +196,13 @@ public class ObjectInspectorTest extends TestCase {
         assertEquals("string", data.toString());
     }
 
-    @SuppressWarnings("rawtypes")
     public void testSimpleXmlList() throws SerDeException {
          XmlSerDe xmlSerDe = new XmlSerDe();
          Configuration configuration = new Configuration();
          Properties properties = new Properties();
          properties.put(LIST_COLUMNS, "test");
          properties.put(LIST_COLUMN_TYPES, "array<string>");
+         properties.put("columns.comments", "test");
          properties.setProperty("column.xpath.test", "//test/text()");
          xmlSerDe.initialize(configuration, properties);
          Text text = new Text();
@@ -213,6 +221,7 @@ public class ObjectInspectorTest extends TestCase {
          Properties properties = new Properties();
          properties.put(LIST_COLUMNS, "test");
          properties.put(LIST_COLUMN_TYPES, "map<string,string>");
+         properties.put("columns.comments", "test");
          properties.setProperty("column.xpath.test", "//*[contains(name(),'test')]");
          xmlSerDe.initialize(configuration, properties);
          Text text = new Text();
@@ -235,6 +244,7 @@ public class ObjectInspectorTest extends TestCase {
         Properties properties = new Properties();
         properties.put(LIST_COLUMNS, "test");
         properties.put(LIST_COLUMN_TYPES, "map<string,string>");
+        properties.put("columns.comments", "test");
         properties.setProperty("column.xpath.test", "//*[contains(name(),'test')]/text()");
         xmlSerDe.initialize(configuration, properties);
         Text text = new Text();

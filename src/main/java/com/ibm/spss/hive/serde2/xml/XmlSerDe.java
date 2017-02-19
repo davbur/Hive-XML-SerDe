@@ -27,7 +27,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hive.serde2.SerDe;
+import org.apache.hadoop.hive.serde.serdeConstants;
+import org.apache.hadoop.hive.serde2.AbstractSerDe;
 import org.apache.hadoop.hive.serde2.SerDeException;
 import org.apache.hadoop.hive.serde2.SerDeStats;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
@@ -37,6 +38,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.log4j.Logger;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.ibm.spss.hive.serde2.xml.processor.XmlMapEntry;
 import com.ibm.spss.hive.serde2.xml.processor.XmlMapFacet;
 import com.ibm.spss.hive.serde2.xml.processor.XmlProcessor;
@@ -47,7 +50,7 @@ import com.ibm.spss.hive.serde2.xml.processor.java.JavaXmlProcessor;
 /**
  * The XML serializer/deserializer for Apache Hive
  */
-public class XmlSerDe implements SerDe {
+public class XmlSerDe extends AbstractSerDe {
 
     private static final Logger LOGGER = Logger.getLogger(XmlSerDe.class);
     private static final String XML_PROCESSOR_CLASS = "xml.processor.class";
@@ -56,9 +59,6 @@ public class XmlSerDe implements SerDe {
 
     private ObjectInspector objectInspector = null;
     private XmlProcessor xmlProcessor = null;
-
-    private static final String LIST_COLUMNS = "columns";
-    private static final String LIST_COLUMN_TYPES = "columns.types";
 
     /**
      * @see org.apache.hadoop.hive.serde2.Deserializer#initialize(org.apache.hadoop.conf.Configuration, java.util.Properties)
@@ -84,8 +84,12 @@ public class XmlSerDe implements SerDe {
         if (this.xmlProcessor == null) {
             this.xmlProcessor = new JavaXmlProcessor();
         }
+        
+        String columnNameProperty = properties.getProperty(serdeConstants.LIST_COLUMNS);
+        String columnTypeProperty = properties.getProperty(serdeConstants.LIST_COLUMN_TYPES);
+            
         // (3) create XML processor context
-        List<String> columnNames = Arrays.asList(properties.getProperty(LIST_COLUMNS).split("[,:;]"));
+        List<String> columnNames = Arrays.asList(columnNameProperty.split("[,:;]"));
         final List<XmlQuery> queries = new ArrayList<XmlQuery>();
         final Map<String, XmlMapEntry> mapSpecification = new HashMap<String, XmlMapEntry>();
         for (String key : properties.stringPropertyNames()) {
@@ -150,12 +154,13 @@ public class XmlSerDe implements SerDe {
             }
         });
         // (5) create the object inspector and associate it with the XML processor
-        List<TypeInfo> typeInfos = TypeInfoUtils.getTypeInfosFromTypeString(properties.getProperty(LIST_COLUMN_TYPES));
+        List<TypeInfo> typeInfos = TypeInfoUtils.getTypeInfosFromTypeString(columnTypeProperty);
         List<ObjectInspector> inspectors = new ArrayList<ObjectInspector>(columnNames.size());
         for (TypeInfo typeInfo : typeInfos) {
             inspectors.add(getStandardJavaObjectInspectorFromTypeInfo(typeInfo, this.xmlProcessor));
         }
-        this.objectInspector = getStandardStructObjectInspector(columnNames, inspectors, this.xmlProcessor);
+        this.objectInspector = getStandardStructObjectInspector(columnNames, inspectors,
+            Lists.newArrayList(Splitter.on('\0').split(properties.getProperty("columns.comments"))), this.xmlProcessor);
     }
 
     private static void initialize(Configuration configuration, final Properties properties, String... keys) {

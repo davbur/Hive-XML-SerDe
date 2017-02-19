@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ibm.spss.hive.serde2.xml</groupId>
 	<artifactId>hivexmlserde</artifactId>
-	<version>1.0.5.3</version>
+	<version>1.0.5.4-cdh5.9.0</version>
 	<packaging>jar</packaging>
 	<name>hive-xml-serde</name>
 	<url>https://github.com/dvasilen/Hive-XML-SerDe</url>
@@ -20,6 +20,11 @@
 			<name>Dmitry Vasilenko</name>
 			<email>dvasilen@gmail.com</email>
 		</developer>
+		<developer>
+			<id>davbur</id>
+			<name>David</name>
+			<email>davbur@gmail.com</email>
+		</developer>
 	</developers>
 	<scm>
 		<!-- Replace the connection below with your project connection -->
@@ -28,35 +33,51 @@
 		<url>scm:git:git@github.com:dvasilen/Hive-XML-SerDe.git</url>
 		<tag>HEAD</tag>
 	</scm>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<wagon.ssh.external.version>2.12</wagon.ssh.external.version>
+		<maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
+		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+		<maven.assembly.plugin.version>3.0.0</maven.assembly.plugin.version>
+		<maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+		<maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+		<junit.version>4.12</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+		<cdh.version>cdh5.9.0</cdh.version>
+		<hive.version>1.1.0-${cdh.version}</hive.version>
+		<hadoop.version>2.6.0-${cdh.version}</hadoop.version>
+	</properties>
 	<build>
 		<!-- wagon-ssh-external extension is necessary for deploying with scpexe -->
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh-external</artifactId>
-				<version>2.2</version>
+				<version>${wagon.ssh.external.version}</version>
 			</extension>
 		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4</version>
+				<version>${maven.release.plugin.version}</version>
 			</plugin>
 			<!-- Assembly Plugin                              -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${maven.assembly.plugin.version}</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
@@ -64,7 +85,7 @@
 					<archive>
 						<manifest>
                            
-                        </manifest>
+						</manifest>
 					</archive>
 				</configuration>
 				<executions>
@@ -79,6 +100,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven.javadoc.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -91,6 +113,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -109,43 +132,45 @@
 		</repository>
 		<repository>
 			<id>repository.cloudera.com</id>
-			<name>repository.cloudera.com-releases</name>
-			<url>https://repository.cloudera.com/artifactory/datanucleus</url>
+			<name>Cloudera Repos</name>
+			<url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-serde</artifactId>
-			<version>1.2.0</version>
+			<version>${hive.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-exec</artifactId>
-			<version>1.2.0</version>
+			<version>${hive.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-mapreduce-client-core</artifactId>
-			<version>2.6.0</version>
+			<version>${hadoop.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-common</artifactId>
-			<version>2.6.0</version>
+			<version>${hadoop.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>${log4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>

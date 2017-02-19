@@ -24,7 +24,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector.PrimitiveCategory;
 import org.apache.hadoop.hive.serde2.objectinspector.StandardStructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
-import org.apache.log4j.Logger;
 
 import com.ibm.spss.hive.serde2.xml.processor.SerDeArray;
 import com.ibm.spss.hive.serde2.xml.processor.XmlProcessor;
@@ -33,9 +32,28 @@ import com.ibm.spss.hive.serde2.xml.processor.XmlProcessor;
  * The struct object inspector
  */
 public class XmlStructObjectInspector extends StandardStructObjectInspector {
-    private static final Logger LOGGER = Logger.getLogger(XmlStructObjectInspector.class);
 
     private XmlProcessor xmlProcessor = null;
+
+    /**
+     * Creates the struct object inspector
+     * 
+     * @param structFieldNames
+     *            the struct field names
+     * @param structFieldObjectInspectors
+     *            the struct field object inspectors
+     * @param structFieldComments
+     *            the struct field comments
+     * @param xmlProcessor
+     *            the XML processor
+     */
+    public XmlStructObjectInspector(List<String> structFieldNames,
+        List<ObjectInspector> structFieldObjectInspectors,
+        List<String> structFieldComments,
+        XmlProcessor xmlProcessor) {
+        super(structFieldNames, structFieldObjectInspectors, structFieldComments);
+        this.xmlProcessor = xmlProcessor;
+    }
 
     /**
      * Creates the struct object inspector

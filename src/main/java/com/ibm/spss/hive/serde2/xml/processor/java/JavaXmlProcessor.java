@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,6 +61,8 @@ public class JavaXmlProcessor implements XmlProcessor {
 
     private static XPathFactory XPATH_FACTORY = null;
 
+    private static final String XML_PARSER_NAMESPACE_AWARE = "xml.parser.namespace.aware";
+
     static {
         DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
         DOCUMENT_BUILDER_FACTORY.setNamespaceAware(true);
@@ -81,6 +84,13 @@ public class JavaXmlProcessor implements XmlProcessor {
     @Override
     public void initialize(XmlProcessorContext xmlProcessorContext) {
         try {
+            Properties properties = xmlProcessorContext.getProperties();
+            if (properties != null) {
+                String strNamespaceAware = properties.getProperty(XML_PARSER_NAMESPACE_AWARE, "true");
+                boolean namespaceAware = Boolean.valueOf(strNamespaceAware);
+                DOCUMENT_BUILDER_FACTORY.setNamespaceAware(namespaceAware);
+            }
+          
             this.builder = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
             XPath xpath = XPATH_FACTORY.newXPath();
             for (XmlQuery xmlQuery : xmlProcessorContext.getXmlQueries()) {
@@ -130,7 +140,7 @@ public class JavaXmlProcessor implements XmlProcessor {
     }
 
     /**
-     * @see com.ibm.spss.hive.serde2.xml.processor.java.XmlProcessor.XPathProcessor#getObjectValue(java.lang.Object, java.lang.String)
+     * @see com.ibm.spss.hive.serde2.xml.processor.XmlProcessor#getObjectValue(java.lang.Object, java.lang.String)
      */
     @SuppressWarnings("rawtypes")
     @Override
@@ -268,7 +278,7 @@ public class JavaXmlProcessor implements XmlProcessor {
     }
 
     /**
-     * @see com.ibm.spss.hive.serde2.xml.processor.java.XmlProcessor.XPathProcessor#getPrimitiveObjectValue(java.lang.Object,
+     * @see com.ibm.spss.hive.serde2.xml.processor.XmlProcessor#getPrimitiveObjectValue(java.lang.Object,
      *      org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector.PrimitiveCategory)
      */
     @Override
@@ -392,7 +402,7 @@ public class JavaXmlProcessor implements XmlProcessor {
 
     /**
      * 
-     * @param node
+     * @param node the node
      */
     protected void trimWhitespace(Node node) {
         List<Node> doomedChildren = new ArrayList<Node>();

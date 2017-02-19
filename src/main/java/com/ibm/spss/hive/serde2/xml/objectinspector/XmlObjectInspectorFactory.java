@@ -91,13 +91,31 @@ public class XmlObjectInspectorFactory {
      *            the field names
      * @param structFieldObjectInspectors
      *            the object inspectors
+     * @param structFieldComments
+     *            the field comments
      * @param xmlProcessor
      *            the XML processor
      * @return the struct object inspector
      */
     public static StructObjectInspector getStandardStructObjectInspector(List<String> structFieldNames,
-        List<ObjectInspector> structFieldObjectInspectors,
+        List<ObjectInspector> structFieldObjectInspectors, List<String> structFieldComments,
         XmlProcessor xmlProcessor) {
+        return new XmlStructObjectInspector(structFieldNames, structFieldObjectInspectors, structFieldComments, xmlProcessor);
+    }
+
+    /**
+     * Returns the struct object inspector
+     * 
+     * @param structFieldNames
+     *            the field names
+     * @param structFieldObjectInspectors
+     *            the object inspectors
+     * @param xmlProcessor
+     *            the XML processor
+     * @return the struct object inspector
+     */
+    public static StructObjectInspector getStandardStructObjectInspector(List<String> structFieldNames,
+        List<ObjectInspector> structFieldObjectInspectors, XmlProcessor xmlProcessor) {
         return new XmlStructObjectInspector(structFieldNames, structFieldObjectInspectors, xmlProcessor);
     }
 

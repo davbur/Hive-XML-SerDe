@@ -67,7 +67,7 @@ public class XmlNode extends DefaultHandler {
 
     /**
      * 
-     * @param inputStream
+     * @param inputStream the inputStream
      */
     protected void initialize(InputStream inputStream) {
         try {
@@ -80,7 +80,7 @@ public class XmlNode extends DefaultHandler {
 
     /**
      * 
-     * @param value
+     * @param value the value
      */
     protected void initialize(String value) {
         try {
