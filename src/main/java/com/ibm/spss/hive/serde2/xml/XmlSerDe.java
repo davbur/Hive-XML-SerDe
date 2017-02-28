@@ -22,6 +22,7 @@ import static com.ibm.spss.hive.serde2.xml.objectinspector.XmlObjectInspectorFac
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -64,9 +65,9 @@ public class XmlSerDe extends AbstractSerDe {
      * @see org.apache.hadoop.hive.serde2.Deserializer#initialize(org.apache.hadoop.conf.Configuration, java.util.Properties)
      */
     @Override
-    public void initialize(Configuration configuration, final Properties properties) throws SerDeException {
+    public void initialize(final Configuration configuration, final Properties properties) throws SerDeException {
         // (1) workaround for the Hive issue with propagating the table properties to the InputFormat
-        initialize(configuration, properties, XmlInputFormat.START_TAG_KEY, XmlInputFormat.END_TAG_KEY);
+        initialize(configuration, properties, XmlInputFormat.START_TAG_KEY, XmlInputFormat.END_TAG_KEY, JavaXmlProcessor.XML_PARSER_NAMESPACE_AWARE);
         // (2) create XML processor
         String processorClass = properties.getProperty(XML_PROCESSOR_CLASS);
         if (processorClass != null) {
@@ -150,8 +151,22 @@ public class XmlSerDe extends AbstractSerDe {
 
             @Override
             public Properties getProperties() {
-                return properties;
+            	final Properties props = new Properties();
+            	
+            	Iterator<Map.Entry<String, String>> iterator = configuration.iterator();
+            	
+            	while(iterator.hasNext()) {
+            		final Map.Entry<String, String> entry = iterator.next();
+            		props.put(entry.getKey(), entry.getValue());
+            	}
+            	
+            	return props;
             }
+
+			@Override
+			public Configuration getConfiguration() {
+				return configuration;
+			}
         });
         // (5) create the object inspector and associate it with the XML processor
         List<TypeInfo> typeInfos = TypeInfoUtils.getTypeInfosFromTypeString(columnTypeProperty);
