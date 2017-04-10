@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.hadoop.conf.Configuration;
-
 /**
  * Defines the context for the XML processor
  */
@@ -47,11 +45,4 @@ public interface XmlProcessorContext {
      * @return the properties
      */
     public Properties getProperties();
-    
-    /**
-     * Hadoop Configuration
-     * 
-     * @return
-     */
-    public Configuration getConfiguration();
 }

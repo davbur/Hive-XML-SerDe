@@ -26,7 +26,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector.PrimitiveCategory;
 import org.w3c.dom.Node;
 
@@ -74,12 +73,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
         Map<String, NodeArray> out = xPathProcessor.parse(data);
         Node node = out.get("field1").get(0);
@@ -109,12 +102,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 // TODO Auto-generated method stub
                 return null;
             }
-
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
         });
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -146,12 +133,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
 
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -182,12 +163,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
         Map<String, NodeArray> out = xPathProcessor.parse(data);
         Node node = out.get("field1").get(0);
@@ -216,12 +191,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 // TODO Auto-generated method stub
                 return null;
             }
-
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
         });
 
@@ -260,12 +229,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
 
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -301,12 +264,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
 
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -340,12 +297,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 // TODO Auto-generated method stub
                 return null;
             }
-
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
         });
 
@@ -381,12 +332,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
 
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -421,12 +366,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 return null;
             }
 
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
         });
 
         Map<String, NodeArray> out = xPathProcessor.parse(data);
@@ -460,12 +399,6 @@ public class JavaXPathProcessorTest extends TestCase {
                 // TODO Auto-generated method stub
                 return null;
             }
-
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
         });
 
