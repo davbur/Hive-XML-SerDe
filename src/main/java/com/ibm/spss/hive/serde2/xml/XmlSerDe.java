@@ -66,7 +66,7 @@ public class XmlSerDe extends AbstractSerDe {
     @Override
     public void initialize(Configuration configuration, final Properties properties) throws SerDeException {
         // (1) workaround for the Hive issue with propagating the table properties to the InputFormat
-        initialize(configuration, properties, XmlInputFormat.START_TAG_KEY, XmlInputFormat.END_TAG_KEY);
+        initialize(configuration, properties, XmlInputFormat.START_TAG_KEY, XmlInputFormat.END_TAG_KEY, JavaXmlProcessor.XML_PARSER_NAMESPACE_AWARE);
         // (2) create XML processor
         String processorClass = properties.getProperty(XML_PROCESSOR_CLASS);
         if (processorClass != null) {
@@ -176,7 +176,15 @@ public class XmlSerDe extends AbstractSerDe {
                     configuration.set(key, propertyValue);
                 }
             }
+
+            // Update properties with specific configuration values
+            if(properties != null && !properties.containsKey(key) && configurationContains(configuration, key)) properties.setProperty(key, configuration.get(key));
         }
+        
+    }
+    
+    private static Boolean configurationContains(final Configuration configuration, final String key) {
+    	return configuration != null ? configuration.get(key) != null : false;
     }
 
     /**

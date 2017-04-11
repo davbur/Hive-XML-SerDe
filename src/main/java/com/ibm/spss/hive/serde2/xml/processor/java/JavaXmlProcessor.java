@@ -61,7 +61,7 @@ public class JavaXmlProcessor implements XmlProcessor {
 
     private static XPathFactory XPATH_FACTORY = null;
 
-    private static final String XML_PARSER_NAMESPACE_AWARE = "xml.parser.namespace.aware";
+    public static final String XML_PARSER_NAMESPACE_AWARE = "xml.parser.namespace.aware";
 
     static {
         DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
